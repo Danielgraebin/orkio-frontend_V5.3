@@ -16,6 +16,9 @@ RUN npm run build
 # ---------- runtime ----------
 FROM nginx:1.25-alpine
 
+# 🔑 INSTALA envsubst
+RUN apk add --no-cache gettext
+
 # Remove config padrão
 RUN rm /etc/nginx/conf.d/default.conf
 
