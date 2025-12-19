@@ -19,13 +19,12 @@ FROM nginx:1.25-alpine
 # Remove config padrão
 RUN rm /etc/nginx/conf.d/default.conf
 
-# Copia template do nginx
-COPY nginx.template.conf /etc/nginx/templates/default.conf.template
+# Copia nginx base
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copia build
 COPY --from=build /app/dist /usr/share/nginx/html
 
 EXPOSE 8080
 
-# ⬇️ ISSO AQUI É O CRÍTICO
-CMD ["nginx", "-g", "daemon off;"]
+CMD sh -c "envsubst '\$PORT' < /etc/nginx/conf.d/default.conf > /tmp/default.conf && mv /tmp/default.conf /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
