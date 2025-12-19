@@ -25,7 +25,7 @@ COPY nginx.template.conf /etc/nginx/templates/default.conf.template
 # Copia build
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Railway injeta PORT
 EXPOSE 8080
 
+# ⬇️ ISSO AQUI É O CRÍTICO
 CMD ["nginx", "-g", "daemon off;"]
